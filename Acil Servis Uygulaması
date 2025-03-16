@@ -87,7 +87,7 @@ void processPatient() {
     patient_count--;
 }
 
-// Kullanicýya secim sunan menu fonksiyonu
+// KullanicÃ½ya secim sunan menu fonksiyonu
 void menu() {
     int choice;
     do {
