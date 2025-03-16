@@ -1,0 +1,44 @@
+# Hasta Yönetim Sistemi
+
+## Proje Tanımı
+Bu proje, hastaların bilgilerini tutan ve öncelik sırasına göre işleyen basit bir hasta yönetim sistemi tasarımıdır. Program, kullanıcının hastaları eklemesine, listelemesine ve öncelik sırasına göre işlem yapmasına olanak tanır.
+
+## Özellikler
+- Hasta ekleme
+- Hasta listeleme
+- Hasta işleme
+- Kullanıcı dostu menü
+
+## Kullanıcı Menüsü
+1. Hasta Ekle
+2. Hastaları Listele
+3. Hastayı İşle
+4. Çıkış
+
+## Kodun Çalışma Prensibi
+1. Program başladığında ana menü gösterilir.
+2. Kullanıcı seçeneklerden birini seçer.
+3. Hasta ekleme işlemi, hasta bilgilerini alır ve kuyruğa ekler.
+4. Hasta listeleme işlemi, mevcut hastaları listeler.
+5. Hasta işleme işlemi, en yüksek önceliğe sahip hastayı seçer ve kuyruğundan çıkarır.
+6. Çıkış seçeneğiyle program sonlanır.
+
+## Akış Şeması
+```plaintext
+            Başlangıç
+                |
+          Menü Göster
+                |
+    ---------------------------
+    |           |             |
+Hasta Ekle  Hastaları Listele  Hastayı İşle
+    |           |             |
+ Hasta Bilgileri Al     En Yüksek Öncelikli Hastayı Bul
+    |           |             |
+ Hasta Kuyruğuna Ekle    Hastayı Kuyruktan Çıkar
+    |           |             |
+    ---------------------------
+                |
+              Çıkış
+                |
+              Son
