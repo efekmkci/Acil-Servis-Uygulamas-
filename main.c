@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_PATIENTS 100 // Maksimum hasta sayisi
+
+// Hasta bilgilerini tutan yapi (struct)
+typedef struct {
+    int id;
+    char name[50];
+    int age;
+    char condition[50];
+    int priority;
+    int prescription_no;
+} Patient;
+
+// Hasta kuyrugu ve hasta sayisini tutan degiskenler
+Patient queue[MAX_PATIENTS];
+int patient_count = 0;
+
+// Hasta ekleme fonksiyonu
+void addPatient() {
+    if (patient_count >= MAX_PATIENTS) {
+        printf("Hasta kuyrugu dolu!\n");
+        return;
+    }
+    Patient p;
+    p.id = patient_count + 1;
+
+    // Hasta bilgilerini al
+    printf("Hasta Adi: ");
+    getchar(); // Onceki satirdan kalan newline karakterini temizle
+    fgets(p.name, sizeof(p.name), stdin);
+    p.name[strcspn(p.name, "\n")] = 0; // Yeni satir karakterini kaldir
+
+    printf("Yas: ");
+    scanf("%d", &p.age);
+    getchar(); // Tampon temizligi icin
+
+    printf("Hastalik Durumu: ");
+    fgets(p.condition, sizeof(p.condition), stdin);
+    p.condition[strcspn(p.condition, "\n")] = 0;
+
+    printf("Oncelik (1-5 arasi, 1 en acil): ");
+    scanf("%d", &p.priority);
+
+    // Recete numarasi rastgele olusturuluyor
+    p.prescription_no = rand() % 10000 + 1000;
+
+    queue[patient_count++] = p;
+    printf("Hasta eklendi: %s, Oncelik: %d, Recete No: %d\n", p.name, p.priority, p.prescription_no);
+}
+
+// Hastalari listeleyen fonksiyon
+void displayPatients() {
+    if (patient_count == 0) {
+        printf("Kuyrukta hasta yok.\n");
+        return;
+    }
+    printf("\nHasta Listesi:\n");
+    int i;
+    for (i = 0; i < patient_count; i++) {
+        printf("ID: %d, Ad: %s, Yas: %d, Durum: %s, Oncelik: %d, Recete No: %d\n",
+               queue[i].id, queue[i].name, queue[i].age, queue[i].condition, queue[i].priority, queue[i].prescription_no);
+    }
+}
+
+// En yuksek oncelige sahip hastayi isleyen fonksiyon
+void processPatient() {
+    if (patient_count == 0) {
+        printf("Kuyrukta hasta yok.\n");
+        return;
+    }
+    int highestPriorityIndex = 0;
+    int i;
+    for (i = 1; i < patient_count; i++) {
+        if (queue[i].priority < queue[highestPriorityIndex].priority) {
+            highestPriorityIndex = i;
+        }
+    }
+    printf("Islem yapilan hasta: %s (Oncelik: %d)\n", queue[highestPriorityIndex].name, queue[highestPriorityIndex].priority);
+    
+    // Hastayi listeden cikarma
+    for (i = highestPriorityIndex; i < patient_count - 1; i++) {
+        queue[i] = queue[i + 1];
+    }
+    patient_count--;
+}
+
+// Kullanicýya secim sunan menu fonksiyonu
+void menu() {
+    int choice;
+    do {
+        printf("\n1. Hasta Ekle\n2. Hastalari Listele\n3. Hastayi Isle\n4. Cikis\nSeciminiz: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                addPatient();
+                break;
+            case 2:
+                displayPatients();
+                break;
+            case 3:
+                processPatient();
+                break;
+            case 4:
+                printf("Cikis yapiliyor...\n");
+                break;
+            default:
+                printf("Gecersiz secim, tekrar deneyin.\n");
+        }
+    } while (choice != 4);
+}
+
+// Ana fonksiyon (program baslangic noktasi)
+int main() {
+    menu();
+    return 0;
+}            
